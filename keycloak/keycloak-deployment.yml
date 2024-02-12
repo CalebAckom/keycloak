@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: iam-thesis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak:15.0.2
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
+          env:
+            - name: KEYCLOAK_USER
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: KEYCLOAK_USER
+            - name: KEYCLOAK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-secret
+                  key: KEYCLOAK_PASSWORD
+            - name: DB_VENDOR
+              value: POSTGRES
+            - name: DB_ADDR
+              value: postgres
+            - name: DB_DATABASE
+              value: keycloak
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: JAVA_OPTS_APPEND
+              value: "-Djava.net.preferIPv4Stack=true"
+          volumeMounts:
+            - name: infinispan-config
+              mountPath: /opt/jboss/infinispan-config.xml
+              subPath: infinispan-config.xml
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "1"
+      volumes:
+        - name: infinispan-config
+          configMap:
+            name: keycloak-infinispan-config
+      terminationGracePeriodSeconds: 60
