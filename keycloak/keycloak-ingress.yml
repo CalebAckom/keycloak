@@ -2,22 +2,23 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: keycloak-ingress
-  namespace: keycloak
+  namespace: iam-thesis
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-name: "route"
     nginx.ingress.kubernetes.io/session-cookie-hash:  "sha1"
+    nginx.ingress.kubernetes.io/proxy-size-buffer-size: "16K"
 spec:
   ingressClassName: nginx
   rules:
-    - host: keycloak.io
+    - host: iam-keycloak.io
       http:
         paths:
           - backend:
               service:
-                name: keycloak-service
+                name: keycloak
                 port:
                   number: 8080
             path: /
