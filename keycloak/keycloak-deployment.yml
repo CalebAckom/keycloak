@@ -48,6 +48,10 @@ spec:
                 secretKeyRef:
                   name: postgres-secret
                   key: POSTGRES_PASSWORD
+            - name: KEYCLOAK_METRICS_ENABLED
+              value: "true"
+            - name: KEYCLOAK_STATISTICS
+              value: "true"
             - name: JAVA_OPTS_APPEND
               value: "-Djava.net.preferIPv4Stack=true"
           volumeMounts:
