@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-infinispan-config
+  namespace: iam-thesis
+data:
+  infinispan-config.xml: |
+    <cluster name="keycloak-cluster">
+        <cache name="realm-cache">
+            <passivation max-idle="10m" />
+            <expiration max-idle="1h" />
+        </cache>
+        <cache name="user-cache">
+            <passivation max-idle="10m" />
+            <expiration max-idle="1h" />            
+        </cache>
+        <cache name="session-cache">
+            <expiration lifespan="12h" />
+            <eviction strategy="LRU" max_entries="10000" />
+        </cache>
+        <cache name="authorization-cache">
+            <passivation max-idle="10m" />
+            <expiration max-idle="1h" />
+        </cache>
+        <statistics enabled="true" />
+    </cluster>
