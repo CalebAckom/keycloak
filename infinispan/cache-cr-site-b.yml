@@ -1,0 +1,22 @@
+apiVersion: infinispan.org/v2alpha1
+kind: Cache
+metadata:
+  name: sessions
+  namespace: iam-thesis
+spec:
+  clusterName: infinispan
+  name: sessions
+  template: |-
+    distributedCache:
+      mode: "SYNC"
+      owners: "2"
+      statistics: "true"
+      stateTransfer:
+        chunkSize: 16
+      backup:
+        mergePolicy: ALWAYS_REMOVE
+        site-a:
+          backup:
+            strategy: "SYNC"
+            stateTransfer:
+              chunkSize: 16

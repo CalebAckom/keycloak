@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: infinispan-standalone-config
+  namespace: iam-thesis
+data:
+  standalone-ha.xml: |
+    <infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:infinis

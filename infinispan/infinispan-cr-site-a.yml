@@ -1,0 +1,28 @@
+apiVersion: infinispan.org/v1
+kind: Infinispan
+metadata:
+  name: infinispan
+  namespace: iam-thesis
+  annotations:
+    infinispan.org/monitoring: "true"
+spec:
+  replicas: 1
+  security:
+    endpointSecretName: connect-secret
+  expose:
+    type: LoadBalancer
+    port: 65535
+  service:
+    type: DataGrid
+#    sites:
+#      local:
+#        name: site-a
+#        expose:
+#          type: LoadBalancer
+#        maxRelayNodes: 128
+#    locations:
+#      - name: site-b
+#        clusterName: infinispan
+#        namespace: iam-thesis
+#        url: openshift://api.site-b
+#        secretName: ispn-xsite-token

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hotrod-client-config
+  namespace: iam-thesis
+data:
+  hotrod-client.properties: |
+    infinispan.client.hotrod.server_list=192.168.49.2:32138
+    infinispan.client.hotrod.auth_username=developer
+    infinispan.client.hotrod.auth_password=ZeAkqlStYBHNFiEX
+    infinispan.client.hotrod.auth_realm=default
+    # Configuration for the Hot Rod client
+    # The Hot Rod client is a Java-based client that allows for interaction with the Infinispan server
+    # The client can be used to store and retrieve data from the server
+    # The client can also be used to query the server for data
+    # The client can also be used to perform administrative tasks on the server
+    # The client can also be used to perform monitoring tasks on the server
+    # The client can also be used to perform security
